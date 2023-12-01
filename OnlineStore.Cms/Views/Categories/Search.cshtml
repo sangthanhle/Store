@@ -1,0 +1,58 @@
+﻿@model IEnumerable<OnlineStore.Cms.ViewModel.CategoriesVM>
+@{
+    ViewData["Title"] = "Search";
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+}
+
+<h1>Search Results</h1>
+<form asp-action="Search" asp-controller="Categories" method="get">
+    <div class="form-group">
+        <label>Category Name:</label>
+        <input name="categoryName" class="form-control" />
+        <button type="submit" class="btn btn-primary">Search</button>
+    </div>
+</form>
+@if (Model != null && Model.Any())
+{
+    <table class="table table-hover table-bordered dataTable no-footer" role="grid">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Name</th>
+                <th scope="col">Description</th>
+                <th scope="col"> Image</th>
+                <th scope="col" style="max-width:50px">IsDeleted</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="">@item.Id</td>
+                    <td class="">@item.Name</td>
+
+                    <td><a class="text-primary">@item.Description</a></td>
+                    <th scope="col" class="img_thumnail">
+                        <img src="~/Img1/@item.Image" style="border-radius: 5px; max-width: 60px">
+                    </th>
+                    <td class="img_thumnail">
+                        <input type="checkbox" name="selectedProducts" value="@item.Id" />
+                    </td>
+                    <td class="img_thumnail">
+                        <a href="@Url.Action("Edit", new { id = item.Id })">
+                            <i class="bi bi-pencil-fill bi-sm"></i>
+                        </a>
+                        <a href="@Url.Action("Delete", new { id = item.Id })">
+                            <i class="bi bi-trash-fill bi-sm  text-danger"></i>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No categories found.</p>
+}

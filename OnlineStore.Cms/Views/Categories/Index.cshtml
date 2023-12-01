@@ -1,0 +1,80 @@
+﻿@model IEnumerable<OnlineStore.Cms.ViewModel.CategoriesVM>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+}
+
+<h1 style="text-align:center">Danh mục</h1>
+<p>
+    <button type="button" class="btn btn-primary" fdprocessedid="qmbti"> <a asp-action="Create" style="color:white"><i class="bi bi-plus-lg"></i>Tạo mới</a></button>
+</p>
+<div class="col-12">
+    <div class="card top-selling overflow-auto">      
+        <div class="card-body pb-0">
+            <form asp-action="Index" asp-controller="Categories" method="get">
+                <div class="form-group">
+                    <input name="categoryName" class="form-control-sm3" placeholder="Enter category name..." />
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </div>
+            </form>
+            @*  <form asp-controller="Product" asp-action="SoftDeleteMultiple" method="post"> *@
+            <table class="table table-hover table-bordered dataTable no-footer" role="grid">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Description</th>                       
+                        <th scope="col" > Image</th>
+                        <th scope="col" style="max-width:50px">IsDeleted</th>
+                         <th scope="col"></th> 
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="">@item.Id</td>
+                            <td class="">@item.Name</td>
+                            
+                            <td><a class="text-primary">@item.Description</a></td>
+                            <th scope="col" class="img_thumnail">
+                                <img src="~/Img1/@item.Image" style="border-radius: 5px; max-width: 60px">
+                            </th>
+                            <td class="img_thumnail">
+                                <input type="checkbox" name="selectedProducts" value="@item.Id" />
+                            </td>
+                            <td class="img_thumnail" >
+                                <a href="@Url.Action("Edit", new { id = item.Id })">
+                                    <i class="bi bi-pencil-fill bi-sm"></i>
+                                </a>
+                                <a href="@Url.Action("Delete", new { id = item.Id })">
+                                    <i class="bi bi-trash-fill bi-sm  text-danger"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            @*    <button type="submit" class="btn btn-danger rounded-pill" onclick="return confirm('Bạn có chắc chắn muốn xóa?')">Xóa Đã Chọn</button>
+            </form> *@
+        </div>
+    </div>
+</div>
+<div class="pagination">
+    @if (ViewBag.TotalPages > 1)
+    {
+        <ul class="pagination">
+            @for (int i = 1; i <= ViewBag.TotalPages; i++)
+            {
+                <li class="page-item @(i == ViewBag.PageNumber ? "active" : "")">
+                    <a class="page-link" href="@Url.Action("Index", new { page = i, pageSize = ViewBag.PageSize })">@i</a>
+                </li>
+            }
+        </ul>
+    }
+</div>
+
+
+
+
