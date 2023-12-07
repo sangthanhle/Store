@@ -42,7 +42,7 @@ namespace OnlineStore.DataAccess.Repositories
         public async Task<IEnumerable<Categorie>> GetPerPageAsync(int pageNumber, int pageSize)
         {
             return await _dbContext.Categories
-            .OrderBy(p => p.Id) 
+            .OrderBy(p => p.Id)
             .Skip((pageNumber - 1) * pageSize)
             .Take(pageSize)
             .ToListAsync();

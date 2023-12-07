@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 using OnlineStore.BusinessLogic.Implement;
 using OnlineStore.BusinessLogic.Service;
 using OnlineStore.DataAccess.DataContext;
@@ -16,12 +17,15 @@ builder.Services.AddDbContext<StoreContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Store")));
 
 //Đăng ký dịch vụ và repository trong Startup.cs:
+//builder.Services.AddScoped<BaseRepository<Categorie>, CategoriesRepository>();
 builder.Services.AddScoped<IRepository<Product>, ProductRepository>();
 builder.Services.AddScoped<IRepository<Categorie>, CategoriesRepository>();
+builder.Services.AddScoped<IRepository<User>, UsersRepository>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 // đăng kí service
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<ICategoriesService,CategoriesService>();
+builder.Services.AddScoped<IUserService, UserService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -32,6 +36,7 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+app.UseStaticFiles();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
