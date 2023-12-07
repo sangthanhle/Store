@@ -14,9 +14,6 @@ namespace OnlineStore.Domain.Helpers
             // map cate
             CreateMap<Categorie, CategorieDTO>();
             CreateMap<CategorieDTO, Categorie>();
-            // map user
-            CreateMap<User, UserDTO>();
-            CreateMap<UserDTO, User>();
         }
     }
 }

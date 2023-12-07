@@ -32,6 +32,7 @@ namespace OnlineStore.DataAccess.Infrastructure
                 await SaveChangeAsync();
             }
         }
+
         public async Task<IEnumerable<TEntity>> GetAllAsync()
         {
             return await _dataContext.Set<TEntity>().ToListAsync();
@@ -41,6 +42,7 @@ namespace OnlineStore.DataAccess.Infrastructure
         {
             return await _dataContext.Set<TEntity>().FindAsync(id);
         }
+
         public async Task<IEnumerable<TEntity>> GetPerPageAsync(int pageNumber, int pageSize)
         {
             return await _dataContext.Set<TEntity>()
@@ -48,6 +50,7 @@ namespace OnlineStore.DataAccess.Infrastructure
                                  .Take(pageSize)
                                  .ToListAsync();
         }
+
         public async Task<int> GetTotalCountAsync()
         {
             return await _dataContext.Set<TEntity>().CountAsync();

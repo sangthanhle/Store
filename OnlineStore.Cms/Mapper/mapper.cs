@@ -12,10 +12,6 @@ namespace OnlineStore.Cms.Mapper
 
             CreateMap<CategorieDTO, CategoriesVM>().ReverseMap();
 
-            CreateMap<UserDTO, UsersVM>().ReverseMap();
-
-
-
         }
     }
 }

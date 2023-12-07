@@ -1,8 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using OnlineStore.BusinessLogic.Implement;
 using OnlineStore.Domain.DTO;
-using Microsoft.AspNetCore.Hosting;
-using System.Text.Json;
 
 namespace OnlineStore.Api.Controllers
 {
@@ -11,6 +10,7 @@ namespace OnlineStore.Api.Controllers
     public class ProductController : ControllerBase
     {
         private readonly IProductService _productService;
+
         public ProductController(IProductService productService)
         {
             _productService = productService;
@@ -54,30 +54,5 @@ namespace OnlineStore.Api.Controllers
             await _productService.DeleteProductAsync(id);
             return NoContent();
         }
-        // phân trang
-        [HttpGet("paged")]
-        public async Task<ActionResult<IEnumerable<ProductDTO>>> GetPagedProducts(int pageNumber = 1, int pageSize = 10)
-        {
-            try
-            {
-                var (products, totalCount) = await _productService.GetPagedAsync(pageNumber, pageSize);
-
-                var metadata = new
-                {
-                    TotalCount = totalCount,
-                    PageSize = pageSize,
-                    CurrentPage = pageNumber,
-                    TotalPages = (int)Math.Ceiling((double)totalCount / pageSize)
-                };
-                Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(metadata));
-
-                return Ok(products);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Internal server error: {ex.Message}");
-            }
-        }
-
     }
 }

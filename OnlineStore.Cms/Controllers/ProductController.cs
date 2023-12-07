@@ -119,7 +119,11 @@ namespace OnlineStore.Cms.Controllers
         //        await _productService.DeleteProductAsync(id);
         //    }
         //    return RedirectToAction(nameof(Index));
-        //}         
+        //}
+
+      
+      
+
     }
 }
 

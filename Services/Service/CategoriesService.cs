@@ -59,7 +59,7 @@ namespace OnlineStore.BusinessLogic.Service
             await _categoriesRepository.SaveChangeAsync();
         }
 
-
+      
 
         public async Task UpdateCategoryAsync(int categoryId, CategorieDTO category)
         {
@@ -68,6 +68,7 @@ namespace OnlineStore.BusinessLogic.Service
             {
                 return;
             }
+
             _mapper.Map(category, existingCategory);
             await _categoriesRepository.UpdateAsync(existingCategory);
         }
